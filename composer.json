@@ -1,0 +1,28 @@
+{
+  "name": "dbeurive/shuntingyard",
+  "description": "This is an implementation of the shunting yard algorithm.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Denis BEURIVE",
+      "email": "dbeurive.github@gmail.com"
+    }
+  ],
+  "keywords": ["shunting-yard", "rpn", "infix"],
+  "autoload": {
+    "psr-4": {
+      "dbeurive\\Shuntingyard\\": "src"
+    }
+  },
+  "archive": {
+    "exclude": ["/tests", "/examples", "/doc", "/README.md"]
+  },
+  "require": {
+    "dbeurive/Lexer": "*"
+
+  },
+  "require-dev": {
+    "phpdocumentor/phpdocumentor": "2.*",
+    "phpunit/phpunit": "5.5.*"
+  }
+}
