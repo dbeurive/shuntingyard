@@ -18,7 +18,7 @@
     "exclude": ["/tests", "/examples", "/doc", "/README.md"]
   },
   "require": {
-    "dbeurive/Lexer": "*"
+    "dbeurive/lexer": "*"
 
   },
   "require-dev": {
