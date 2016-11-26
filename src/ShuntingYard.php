@@ -5,8 +5,7 @@
 //    This work is licensed under the Creative Commons Attribution 3.0
 //    Unported License.
 //
-//    A summary of the license is given below, followed by the full legal
-//    text.
+//    A summary of the license is given below.
 //
 //    --------------------------------------------------------------------
 //
@@ -54,6 +53,7 @@ class ShuntingYard
     const ASSOC_LEFT = 'left';
     const ERROR_KEY_MESSAGE = 'message';
     const ERROR_KEY_FORMULA = 'formula';
+    const DEBUG = false;
 
     /** @var array|null List of tokens. */
     private $__tokens = null;
@@ -163,7 +163,7 @@ class ShuntingYard
     }
 
     /**
-     * Parse a given infix expression.
+     * Parse a given infix expression and convert it into the corresponding RPN representation.
      * @param string $inInfixExpression Infix expression to parse.
      * @param array $outError Reference to an associative array used to store information about an error.
      *        Array's keys are:
@@ -172,7 +172,7 @@ class ShuntingYard
      * @return array|false Upon successful completion, the method returns an array that contains the RPN representation of the given infix expression.
      *         Otherwise, the method returns the value false.
      */
-    public function lex($inInfixExpression, &$outError) {
+    public function convert($inInfixExpression, &$outError) {
 
         $this->__reset();
         $outError = null;
@@ -307,26 +307,44 @@ class ShuntingYard
             $this->__pushToOutputQueue($_operator);
         }
 
-        return $this->__outputQueue;
+        return array_reverse($this->__outputQueue);
     }
 
+    /**
+     * Return the RPN representation of the lastly parsed infix expression.
+     * @return array The method returns an array that contains the RPN representation of the lastly parsed infix expression.
+     */
     public function getRpn() {
-        return $this->__outputQueue;
+        return array_reverse($this->__outputQueue);
     }
 
-    public function dumpRpn() {
+    /**
+     * Return a text that represent a given RPN representation.
+     * @param array $inRpnRepresentation the RPN representation.
+     * @return string The method returns a string that represents the given RPN representation.
+     */
+    public function dumpRpn(array $inRpnRepresentation) {
         $m = 0;
+
         /** @var Token $_token */
-        foreach ($this->__outputQueue as $_token) {
+        foreach ($inRpnRepresentation as $_token) {
             $m = $m > strlen($_token->type) ? $m : strlen($_token->type);
         }
 
-        foreach ($this->__outputQueue as $_token) {
-            printf("\t%" . $m . 's %s%s', $_token->type, $_token->value, PHP_EOL);
+        $result = array();
+        foreach ($inRpnRepresentation as $_token) {
+            $result[] = sprintf("%" . $m . 's %s', $_token->type, $_token->value);
         }
+        return implode(PHP_EOL, $result);
     }
 
+    /**
+     * This method is used to write debug information.
+     * @param string $inText Message to write.
+     */
     private function __debug($inText) {
-        // print "$inText\n";
+        if (self::DEBUG) {
+            print "$inText\n";
+        }
     }
 }
