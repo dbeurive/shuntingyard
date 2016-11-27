@@ -120,6 +120,12 @@ The algorithm is configured by:
 * The token's type that represents the start of a list of parameters (typically "(").
 * The token's type that represents the end of a list of parameters (typically ")").
 
+> **WARNING**
+>
+> Make sure to double all characters "`\`" within the regular expressions that define the tokens.
+> That is: `'/\s/'` becomes `'/\\s/'.`
+
+
 The synopsis should be clear enough. You can also consult the [example](examples/example.php).
 
 
