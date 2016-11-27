@@ -125,6 +125,10 @@ The algorithm is configured by:
 > Make sure to double all characters "`\`" within the regular expressions that define the tokens.
 > That is: `'/\s/'` becomes `'/\\s/'.`
 
+**Be aware that the order of declarations of the tokens is important** (see the [documentation for the class dbeurive\Lexer\Lexer](https://github.com/dbeurive/lexer/blob/master/README.md))).
+
+
+
 
 The synopsis should be clear enough. You can also consult the [example](examples/example.php).
 
