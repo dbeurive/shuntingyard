@@ -129,7 +129,6 @@ The algorithm is configured by:
 
 
 
-
-The synopsis should be clear enough. You can also consult the [example](examples/example.php).
+The synopsis should be clear enough. You can also consult the [example](examples/example1.php).
 
 
