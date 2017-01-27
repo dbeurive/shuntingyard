@@ -163,6 +163,21 @@ class ShuntingYard
     }
 
     /**
+     * Convert Lex token list into the corresponding RPN representation.
+     * @param string $tokens Lex token list to convert.
+     * @param array $outError Reference to an associative array used to store information about an error.
+     *        Array's keys are:
+     *        - ShuntingYard::ERROR_KEY_MESSAGE: the error message.
+     *        - ShuntingYard::ERROR_KEY_FORMULA: the formula that caused the error.
+     * @return array|false Upon successful completion, the method returns an array that contains the RPN representation of the given infix expression.
+     *         Otherwise, the method returns the value false.
+     */
+    public function convertFromTokens($tokens, &$outError)
+    {
+        return $this->_convert($tokens, 'Tokens given', $outError);
+    }
+
+    /**
      * Parse a given infix expression and convert it into the corresponding RPN representation.
      * @param string $inInfixExpression Infix expression to parse.
      * @param array $outError Reference to an associative array used to store information about an error.
@@ -173,17 +188,18 @@ class ShuntingYard
      *         Otherwise, the method returns the value false.
      */
     public function convert($inInfixExpression, &$outError) {
-
-        $this->__reset();
-        $outError = null;
-
         $lexer = new Lexer($this->__tokens);
         $tokens = $lexer->lex($inInfixExpression);
+        return $this->_convert($tokens, $inInfixExpression, $outError);
+    }
 
+    public function _convert($tokens, $inInfixExpression, &$outError) {
+        $outError = null;
+        $this->__reset();
         /**
-         * @var int $_index
-         * @var Token $_token
-         */
+        * @var int $_index
+        * @var Token $_token
+        */
         foreach ($tokens as $_index => $_token) {
 
             if (in_array($_token->type, $this->__valueTypes)) {
